@@ -8,6 +8,8 @@ def app():
     user  = st.text_input("Benutzer")
     email = st.text_input("E-Mail")
     if st.button("Anmelden"):
+        user = user.strip()
+        email = email.strip()
         if email == VALID_EMAIL and user == VALID_USER:
             st.session_state.logged_in = True
             st.session_state.user = user
