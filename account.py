@@ -16,3 +16,5 @@ def app():
             st.rerun()
         else:
             st.error("Login fehlgeschlagen")
+    st.write("##### User = admin")
+    st.write("##### admin@admin.com")
