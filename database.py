@@ -1,6 +1,6 @@
 import tinydb as tdb
 
-DB_PATH = "data/db.json"
+DB_PATH = "db.json"
 db = tdb.TinyDB(DB_PATH)
 
 users_table   = db.table("users")
