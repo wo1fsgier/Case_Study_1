@@ -3,19 +3,20 @@ import streamlit as st
 from Verwaltung import geraete, nutzer, reserviert, wartung
 def sidebar():
     st.sidebar.title("Menü")
-    if st.sidebar.button("Geräte"):
+
+    if st.sidebar.button("Geräte-Verwaltung"):
         st.session_state.page = "geraete"
         st.rerun()
 
-    if st.sidebar.button("Nutzer"):
+    if st.sidebar.button("Nutzer-Verwaltung"):
         st.session_state.page = "nutzer"
         st.rerun()
 
-    if st.sidebar.button("Reserviert"):
+    if st.sidebar.button("Reservierungen"):
         st.session_state.page = "reserviert"
         st.rerun()
 
-    if st.sidebar.button("Wartung"):
+    if st.sidebar.button("Wartungen"):
         st.session_state.page = "wartung"
         st.rerun()
 
