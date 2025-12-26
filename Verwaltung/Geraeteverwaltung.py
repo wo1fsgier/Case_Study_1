@@ -14,7 +14,7 @@ def app():
 
     with st.form("create_device_form"):
         name  = st.text_input("Gerätname")
-        farbe = st.text_input("Gerätfarbe")
+        nutzername = st.text_input("Gerätenutzer")
 
         submitted = st.form_submit_button("Gerät erstellen")
 
@@ -35,7 +35,7 @@ def app():
                 device = {
                     "id": str(uuid.uuid4()),
                     "name": name,
-                    "farbe": farbe,
+                    "nutzer": nutzername,
                     "status": "frei"
                 }
                 devices_table.insert(device)
@@ -53,8 +53,9 @@ def app():
 
         table_data = {
         "Gerät": [],
-        "Farbe": [],
-        "Status": []
+        "Nutzer": [],
+        "Status": [],
+        "Geräte-ID": []
      }
         for d in devices:
 
@@ -66,7 +67,33 @@ def app():
                 status = "🔴 :red[Wartung]"
 
             table_data["Gerät"].append(f":material/devices: {d['name']}")
-            table_data["Farbe"].append(d["farbe"])
+            table_data["Nutzer"].append(d["nutzer"])
             table_data["Status"].append(status)
+            table_data["Geräte-ID"].append(d["id"])
 
         st.table(table_data, border="horizontal")
+
+        st.divider()
+
+        st.subheader("Geräte Löschen")
+        
+    if devices:
+
+        device_map = {}
+
+        for d in devices:
+
+            label = f"{d["name"]} ({d["nutzer"]})"
+            device_map[label] = d.doc_id
+
+        selected_device = st.selectbox(
+        "Gerät auswählen",
+        options=list(device_map.keys())
+        )
+
+        if st.button("🗑️ Gerät löschen"):
+            devices_table.remove(doc_ids=[device_map[selected_device]])
+            st.success("Gerät wurde gelöscht.")
+            st.rerun()
+    else:
+        st.info("Keine Geräte zum Löschen vorhanden.")
