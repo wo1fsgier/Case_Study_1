@@ -1,6 +1,6 @@
 from streamlit_extras.card import card
 import streamlit as st
-from Verwaltung import geraete, nutzer, reserviert, wartung
+from UI_Elemente import geraete, nutzer, reserviert, wartung
 def sidebar():
     st.sidebar.title("Menü")
 
