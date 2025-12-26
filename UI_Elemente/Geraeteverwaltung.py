@@ -66,7 +66,7 @@ def app():
             else:
                 status = "🔴 :red[Wartung]"
 
-            table_data["Gerät"].append(f":material/devices: {d['name']}")
+            table_data["Gerät"].append(f":material/devices: {d["name"]}")
             table_data["Nutzer"].append(d["nutzer"])
             table_data["Status"].append(status)
             table_data["Geräte-ID"].append(d["id"])

@@ -1,8 +1,7 @@
-import uuid
 
 class User:
 
-    def __init__(self, email, name, userid):
+    def __init__(self, email, name):
         self.name = name
         self.email = email
-        self.userid = userid
+        self.id = None
