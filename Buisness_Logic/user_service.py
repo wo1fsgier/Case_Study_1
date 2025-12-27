@@ -27,9 +27,13 @@ class User_Verwaltung:
         return {"success": True}
 
     def get_all_users(self):
-        return [
-            User.from_dict(u)
-            for u in users_table.all()
-        ]
+
+        users = []
+
+        for u in users_table.all():
+            user_obj = User.from_dict(u)
+            users.append(user_obj)
+
+        return users
     
 
