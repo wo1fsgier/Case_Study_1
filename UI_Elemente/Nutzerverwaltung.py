@@ -37,10 +37,12 @@ def app():
      }
     for n in users:
 
-        table_data["Name"].append(f":material/devices: {n['name']}")
-        table_data["Email"].append(n["email"])
-        table_data["User-ID"].append(n["id"])
+        table_data["Name"].append(n.name)
+        table_data["Email"].append(n.email)
+        table_data["User-ID"].append(n.id)
 
     st.table(table_data, border="horizontal")
 
     st.divider()
+
+    st.subheader("Nutzer Bearbeiten")

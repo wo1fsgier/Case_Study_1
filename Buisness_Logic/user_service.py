@@ -17,15 +17,19 @@ class User_Verwaltung:
             if u.get("email") == email:
                 return {"success": False, "error": "User existiert bereits"}
 
-        user = {
-            "id": str(uuid.uuid4()),
-            "name": name,
-            "email": email
-        }
-        users_table.insert(user)
+        user = User(
+          user_id=str(uuid.uuid4()),
+            name=name,
+            email=email
+        )
+
+        users_table.insert(user.to_dict())
         return {"success": True}
 
     def get_all_users(self):
-        return users_table.all()
+        return [
+            User.from_dict(u)
+            for u in users_table.all()
+        ]
     
 
