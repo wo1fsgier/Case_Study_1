@@ -1,29 +1,41 @@
-class device_service:
+from Models.Devices import Device
+from .user_service import User_Verwaltung
+from database import devices_table
+import tinydb as tdb
+import uuid
 
-    def create_device():
 
-        ##Hier später weiterarbeiten :)
-        '''
+##Hier muss noch fertig implementiert werden
+
+class Device_Verwaltung:
+
+    def __init__(self):
+        self.user_service = User_Verwaltung()
+
+    def create_device(self, name, responsible_user_email):
+
         if not name.strip():
             return {"success": False, "error": "Name darf nicht leer sein"}
     
-        if not email.strip():
+        if not responsible_user_email.strip():
             return {"success": False, "error": "Email darf nicht leer sein"}
 
-        for u in users_table.all():
-            if u.get("email") == email:
-                return {"success": False, "error": "User existiert bereits"}
+        for u in devices_table.all():
+            if u.get("name") == name:
+                return {"success": False, "error": "Gerät existiert bereits"}
+            
+        user = self.user_service.get_user_by_email(responsible_user_email)
+        if not user:
+            return {"success": False, "error": "User existiert nicht"}
 
-        user = User(
-          user_id=str(uuid.uuid4()),
+        device = Device(
+          geraete_id=str(uuid.uuid4()),
             name=name,
-            email=email
+            responsible_user_id=user.id
         )
 
-        users_table.insert(user.to_dict())
+        devices_table.insert(device.to_dict())
         return {"success": True}
-'''
-        pass
     
     def get_all_devices():
         

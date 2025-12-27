@@ -45,4 +45,4 @@ def app():
 
     st.divider()
 
-    st.subheader("Nutzer Bearbeiten")
+    st.subheader("Nutzer Bearbeiten/Löschen")
