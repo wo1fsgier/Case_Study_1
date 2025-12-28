@@ -41,5 +41,10 @@ class User_Verwaltung:
             if u.get("email") == email:
                 return User.from_dict(u)
         return None
-    
+
+    def get_user_by_id(self, user_id: str):
+        for u in users_table.all():
+            if u.get("id") == user_id:
+                return User.from_dict(u)
+        return None
 

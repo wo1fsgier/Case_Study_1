@@ -7,6 +7,7 @@ import uuid
 
 ##Hier muss noch fertig implementiert werden
 
+
 class Device_Verwaltung:
 
     def __init__(self):
@@ -37,9 +38,16 @@ class Device_Verwaltung:
         devices_table.insert(device.to_dict())
         return {"success": True}
     
-    def get_all_devices():
-        
-        pass
+    def get_user_email_for_device(self, device: Device) -> str:
+
+        user = self.user_service.get_user_by_id(device.user_id)
+        return user.email 
+    
+    def get_all_devices(self):
+        return [
+        Device.from_dict(d)
+        for d in devices_table.all()
+        ]
 
     def delete_device(device_id):
 

@@ -33,6 +33,33 @@ def app():
 
     st.subheader("Geräte Übersicht")
 
+    devices = device_service.get_all_devices()
+
+    if not devices:
+        st.info("Noch keine Geräte vorhanden.")
+
+    else:
+
+        table_data = {
+        "Name": [],
+        "User_Email": [],
+        "Status": [],
+        "Last_Update": []
+        }
+        for n in devices:
+            email = device_service.get_user_email_for_device(n)
+
+            table_data["Name"].append(n.name)
+            table_data["User_Email"].append(email)
+            table_data["Status"].append(n.status)
+            table_data["Last_Update"].append(n.last_update.strftime("%d.%m.%Y %H:%M"))
+
+    st.table(table_data, border="horizontal")
+
+    st.divider()
+
+    st.subheader("Gerät Bearbeiten/Löschen")
+
 '''
     devices = devices_table.all()
 

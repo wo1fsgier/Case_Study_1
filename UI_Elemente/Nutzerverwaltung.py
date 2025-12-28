@@ -25,21 +25,22 @@ def app():
 
     users = user_service.get_all_users()
 
+    table_data = {
+    "Name": [],
+    "Email": [],
+    "User-ID": [],
+    }
+
     if not users:
-        st.info("Noch keine Geräte vorhanden.")
+        st.info("Noch keine Nutzer vorhanden.")
 
     else:
 
-        table_data = {
-        "Name": [],
-        "Email": [],
-        "User-ID": [],
-     }
-    for n in users:
+        for n in users:
 
-        table_data["Name"].append(n.name)
-        table_data["Email"].append(n.email)
-        table_data["User-ID"].append(n.id)
+            table_data["Name"].append(n.name)
+            table_data["Email"].append(n.email)
+            table_data["User-ID"].append(n.id)
 
     st.table(table_data, border="horizontal")
 
