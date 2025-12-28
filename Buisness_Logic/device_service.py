@@ -1,7 +1,7 @@
 from Models.Devices import Device
 from .user_service import User_Verwaltung
 from database import devices_table
-import tinydb as tdb
+from tinydb import TinyDB, Query
 import uuid
 
 
@@ -12,6 +12,8 @@ class Device_Verwaltung:
 
     def __init__(self):
         self.user_service = User_Verwaltung()
+        self.db = TinyDB("db.json")
+        self.devices = self.db.table("devices")
 
     def create_device(self, name, responsible_user_email):
 
@@ -30,7 +32,7 @@ class Device_Verwaltung:
             return {"success": False, "error": "User existiert nicht"}
 
         device = Device(
-          geraete_id=str(uuid.uuid4()),
+            geraete_id=str(uuid.uuid4()),
             name=name,
             responsible_user_id=user.id
         )
@@ -49,15 +51,16 @@ class Device_Verwaltung:
         for d in devices_table.all()
         ]
 
-    def delete_device(device_id):
+    def delete_device(self, device_id: str):
+        search = Query()
+        removed = devices_table.remove(search.id == device_id)
+        return removed
+
+    def update_device(self, device_id, data):
 
         pass
 
-    def update_device(device_id, data):
-
-        pass
-
-    def change_status(device_id, status):
+    def change_status(self, device_id, status):
         
         pass
 

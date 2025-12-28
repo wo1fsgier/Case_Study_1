@@ -59,4 +59,14 @@ def app():
 
     st.divider()
 
-    st.subheader("Gerät Bearbeiten/Löschen")
+    st.subheader("Gerät Löschen")
+    if devices: 
+        device_map = {f"{d.name} ({d.id})":d for d in devices}
+        selected_key = st.selectbox("Gerät auswäheln", list (device_map.keys()))
+        selected_device = device_map[selected_key]
+        if st.button("Gerät löschen"):
+            device_service.delete_device(selected_device.id)
+            st.success("Gerät gelöscht")
+            st.rerun()
+    else:
+        st.info("Keine Geräte zum Löschen")
