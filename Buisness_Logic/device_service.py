@@ -1,11 +1,8 @@
-from Models.Devices import Device
-from .user_service import User_Verwaltung
-from database import devices_table
-from tinydb import TinyDB, Query
 import uuid
-
-
-##Hier muss noch fertig implementiert werden
+from tinydb import TinyDB, Query
+from Models.Devices import Device
+from database import devices_table
+from .user_service import User_Verwaltung
 
 
 class Device_Verwaltung:
@@ -19,7 +16,7 @@ class Device_Verwaltung:
 
         if not name.strip():
             return {"success": False, "error": "Name darf nicht leer sein"}
-    
+
         if not responsible_user_email.strip():
             return {"success": False, "error": "Email darf nicht leer sein"}
 
@@ -56,12 +53,36 @@ class Device_Verwaltung:
         removed = devices_table.remove(search.id == device_id)
         return removed
 
-    def update_device(self, device_id, data):
-
-        pass
-
-    def change_status(self, device_id, status):
+    def update_device(self, device_id: str, data: dict):
+        search = Query()
+        updates = {}
+        # keine leeren Felder, sonst crasht tindydb:
+        if "name" in data:
+            name = data["name"].strip()
+            if not name: 
+                return{"success": False, "error": "Name darf nicht leer sein"}
+            # doppelte Namen blockieren:
+            for i in devices_table.all():
+                if i.get("name") == name and i.get("id") != device_id:
+                    return{"success": False, "error": "Gerät exestiert bereits"}
+            
+            updates["name"] = name
+        # User für das Gerät updaten:
+        if "responsible_user_email" in data:
+            email = data["responsible_user_email"].strip()
+            if not email:
+                return{"success": False, "error": "Email darf nicht leer sein"}
+            user = self.user_service.get_user_by_email(email)
+            if not user:
+                return{"success": False, "error": "User exestiert nicht"}
+            
+            updates["responsible_user_id"] = user.id
         
+        devices_table.update(updates, search.id == device_id)
+        return{"success": True, "updated": updates}
+    
+    def change_status(self, device_id, status):
+        # Das brauchen wir erst bei Reservierungen
         pass
-
+ 
 

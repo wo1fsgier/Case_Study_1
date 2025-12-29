@@ -37,3 +37,6 @@ class Device:
         device.creation_date = datetime.fromisoformat(data["creation_date"])
         device.last_update = datetime.fromisoformat(data["last_update"])
         return device
+    
+    def __str__(self):
+        return f"{self.name} ({self.id})"

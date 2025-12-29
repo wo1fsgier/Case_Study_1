@@ -70,3 +70,20 @@ def app():
             st.rerun()
     else:
         st.info("Keine Geräte zum Löschen")
+
+    st.subheader("Gerät bearbeiten")
+    
+    if not devices: 
+        st.info("Keine Geräte zum Bearbeiten vorhanden")
+    else: 
+        edit = st.selectbox("Gerät auswählen", devices)
+        default_email = device_service.get_user_email_for_device(edit)
+        with st.form("edit_device"):
+            new_name = st.text_input("Gerätename", value = edit.name)
+            new_email = st.text_input("Mail der haftenden Person", value = default_email)
+            confirm = st.form_submit_button("Bestätigen")
+
+        if confirm:
+            result = device_service.update_device(edit.id,{"name": new_name, "responsible_user_email": new_email})
+            st.success("Änderungen gespeichert")
+            st.rerun()
