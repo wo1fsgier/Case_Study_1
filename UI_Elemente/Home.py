@@ -1,37 +1,40 @@
 from streamlit_extras.card import card
 import streamlit as st
-from UI_Elemente import geraete, nutzer, reserviert, wartung
+
+from streamlit_option_menu import option_menu
+from UI_Elemente.Geraeteverwaltung import app as geraete
+from UI_Elemente.Nutzerverwaltung import app as nutzer
+from UI_Elemente.Reservierungssystem import app as reserviert
+from UI_Elemente.Wartung import app as wartung
+page = {
+    "Geräteverwaltung": "geraete",
+    "Nutzerverwaltung": "nutzer",
+    "Reservierungen": "reserviert",
+    "Wartung": "wartung",
+}
+
 def sidebar():
-    st.sidebar.title("Menü")
 
-    if st.sidebar.button("Geräte-Verwaltung"):
-        st.session_state.page = "geraete"
+    with st.sidebar:
+        selected = option_menu(
+            menu_title = "Menü",
+            options = list(page.keys()),
+        )
+    new_page = page[selected]
+    if st.session_state.get("page") != new_page:
+        st.session_state.page = new_page
         st.rerun()
-
-    if st.sidebar.button("Nutzer-Verwaltung"):
-        st.session_state.page = "nutzer"
-        st.rerun()
-
-    if st.sidebar.button("Reservierungen"):
-        st.session_state.page = "reserviert"
-        st.rerun()
-
-    if st.sidebar.button("Wartungen"):
-        st.session_state.page = "wartung"
-        st.rerun()
-
-    st.sidebar.divider()
     if st.sidebar.button("Zurück zum Dashboard"):
         st.session_state.page = None
         st.rerun()
+
+
 def app():
     if "page" not in st.session_state:
         st.session_state.page = None
     if st.session_state.page in {"geraete", "nutzer", "reserviert", "wartung"}:
         sidebar()
-    if st.session_state.page is not None:
-        
-
+    
         if st.session_state.page == "geraete":
             geraete()
         elif st.session_state.page == "nutzer":
@@ -44,7 +47,6 @@ def app():
         if st.button("Zurück"):
             st.session_state.page = None
             st.rerun()
-
         return
 
     st.title("Admin Dashboard")

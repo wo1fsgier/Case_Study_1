@@ -1,18 +1,18 @@
 import streamlit as st
-import account, admin
-import datetime
+import UI_Elemente.Login as Login
+import UI_Elemente.Home as Home
 
 st.set_page_config(
-        page_title = "Verwaltung"
+        page_title = "HG 3D Control"
 )
 
 def main ():
     if "logged_in" not in st.session_state:
         st.session_state.logged_in = False
     if not st.session_state.logged_in:
-        account.app()
+        Login.app()
     else:
-        admin.app()
+        Home.app()
 
 if __name__ == "__main__":
     main()
