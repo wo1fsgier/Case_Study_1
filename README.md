@@ -26,16 +26,16 @@ Am 29.12.2025 gab es eine große Erweiterung zum Dashboard. Im folgendem finden 
 
 ### Loginfenster:
 
-![alt text](Images/Login.png>)
+![alt text](Images/Login.png)
 
 ### Admin Dashboard
 
-![alt text](Images/admin.png>)
+![alt text](Images/admin.png)
 
 ### Geräteverwaltung
 
-![alt text](Images/Geräte.png>)
+![alt text](Images/Geräte.png)
 
 ### Nutzerverwaltung
 
-![alt text](Images/Nutzer.png>)
+![alt text](Images/Nutzer.png)
