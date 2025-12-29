@@ -3,7 +3,7 @@ import UI_Elemente.Login as Login
 import UI_Elemente.Home as Home
 
 st.set_page_config(
-        page_title = "HG 3D Control"
+        page_title = "HAWG Device Control"
 )
 
 def main ():

@@ -4,7 +4,7 @@ VALID_EMAIL = "admin@admin.com"
 VALID_USER  = "admin"
 
 def app():
-    st.title ("HG 3D Control")
+    st.title ("HAWG Device Control")
     with st.form(key = "signup", clear_on_submit=True):
         st.subheader("Login")
         user  = st.text_input("Benutzer")
