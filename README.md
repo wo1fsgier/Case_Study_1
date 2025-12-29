@@ -1,6 +1,6 @@
 ![alt text](Images/HAWG.png)
 
-# Case_Study_1 (HG 3D Control)
+# Case_Study_1 (HAWG Device Control)
 
 Für dieses Assignment mussten wir eine Software zu entwickeln, mit der Geräte (z.B. Laser-Cutter, 3D-Drucker, etc.) an einer Hochschule verwaltet werden können.
 
@@ -20,7 +20,22 @@ streamlit run main.py
 
 ## Dashboard: 
 
-Das Dashboard zum Stand von 19.12.2025, vor dem ersten Assignment finden Sie unter diesem [Link](https://drive.google.com/drive/folders/1aZwUw87IfQMBrL1t-ImaTXJyoQ_oWbUH?usp=drive_link)
-https://drive.google.com/drive/folders/1aZwUw87IfQMBrL1t-ImaTXJyoQ_oWbUH?usp=drive_link
+Das Dashboard zum Stand von 19.12.2025 also vor der Deadline des ersten Assignments finden Sie unter diesem [Link](https://drive.google.com/drive/folders/1aZwUw87IfQMBrL1t-ImaTXJyoQ_oWbUH?usp=drive_link)
 
-Am 29.12.2025 gab es eine große Erweiterung zum Dashboard: 
+Am 29.12.2025 gab es eine große Erweiterung zum Dashboard. Im folgendem finden Sie das Dasboard in der neuesten Version:
+
+### Loginfenster:
+
+![alt text](Images/Login.png>)
+
+### Admin Dashboard
+
+![alt text](Images/admin.png>)
+
+### Geräteverwaltung
+
+![alt text](Images/Geräte.png>)
+
+### Nutzerverwaltung
+
+![alt text](Images/Nutzer.png>)
