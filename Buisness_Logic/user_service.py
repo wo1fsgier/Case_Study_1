@@ -1,7 +1,9 @@
 from Models import User
 from database import users_table
-import tinydb as tdb
+from tinydb import TinyDB, Query
 import uuid
+from database import devices_table
+
 
 class User_Verwaltung:
 
@@ -47,4 +49,34 @@ class User_Verwaltung:
             if u.get("id") == user_id:
                 return User.from_dict(u)
         return None
+    
+    def delete_user(self, user_id: str):
+        search = Query()
+        has_devices = devices_table.contains(search.responsible_user_id == user_id)
+        if has_devices:
+            return{"success": False, "error": "Nutzer haftet für einen Drucker"}
+        x = Query()
+        removed = users_table.remove(search.id == user_id)
+        return removed
 
+    def edit_user(self, user_id: str, data: dict):
+        search = Query()
+        updates = {}
+        # keine leeren Felder, sonst crasht tinydb:
+        if "name" in data:
+            name = data["name"].strip()
+            if not name: 
+                return{"success": False, "error": "Name darf nicht leer sein"}
+            updates["name"] = name
+
+        if "email" in data:
+            email = data["email"].strip()
+            if not email:
+                return{"success": False, "error": "Email darf nicht leer sein"}
+            exists = users_table.get(search.email == email)
+            if exists and exists.get("id") != user_id:
+                return{"success": False, "error": "Email exestiert bereits"}
+            updates["email"] = email
+    
+        users_table.update(updates, search.id == user_id)
+        return{"success": True, "updated": updates}

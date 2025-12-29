@@ -20,3 +20,5 @@ class User:
             name=data["name"],
             email=data["email"]
         )
+    def __str__(self):
+        return f"{self.name} ({self.id})"
