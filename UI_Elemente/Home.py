@@ -14,11 +14,15 @@ page = {
 }
 
 def sidebar():
-
+    keys = list(page.keys()) # Geraeteverwaltung, Nutzerverwaltung...
+    vals = list(page.values()) # Seiten IDs bsp geraete, nutzer..
+    current = st.session_state.get("page")
+    default_index = vals.index(current) if current in vals else 0 # damit die Page nicht überschrieben wird
     with st.sidebar:
         selected = option_menu(
             menu_title = "Menü",
             options = list(page.keys()),
+            default_index= default_index,
         )
     new_page = page[selected]
     if st.session_state.get("page") != new_page:

@@ -55,9 +55,11 @@ class User_Verwaltung:
         has_devices = devices_table.contains(search.responsible_user_id == user_id)
         if has_devices:
             return{"success": False, "error": "Nutzer haftet für einen Drucker"}
-        x = Query()
         removed = users_table.remove(search.id == user_id)
-        return removed
+        if removed:
+            return{"success":True}
+        else:
+            return {"success":False, "error": "Nutzer nicht gefudnen"} 
 
     def edit_user(self, user_id: str, data: dict):
         search = Query()
