@@ -1,9 +1,7 @@
 import streamlit as st
 from Buisness_Logic.user_service import User_Verwaltung
-from styles import set_background
 
 def app():
-    set_background("#524E4D")
     user_service = User_Verwaltung()
     st.write("# Nutzer-Verwaltung")
     st.write("## Nutzer anlegen")

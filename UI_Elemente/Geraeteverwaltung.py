@@ -1,15 +1,11 @@
 import streamlit as st
 from Buisness_Logic.device_service import Device_Verwaltung
-from styles import set_background
-import uuid
 
 ## Gerät erstellen funktioniert für die Datenbank bereits. Alles weitere also Anzeige etc. muss noch implementiert werden
 
 def app():
 
     device_service = Device_Verwaltung()
-
-    set_background("#524E4D")
 
     st.write("# Gerätemanagement")
 
