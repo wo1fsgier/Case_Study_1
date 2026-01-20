@@ -1,24 +1,24 @@
+from typing import Self
+from Models.Serializable import Serializable
+from database import Singleton
 
-class User:
-
-    def __init__(self, user_id, email, name):
+class User(Serializable):
+    db_connector = Singleton().get_table("users")
+    def __init__(self, id, email:str, name:str, creation_date=None, last_update = None):
+        
+        super().__init__(id, creation_date, last_update)
         self.name = name
         self.email = email
-        self.id = user_id
         
-    def to_dict(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-            "email": self.email
-        }
-    
-    @staticmethod
-    def from_dict(data):
-        return User(
-            user_id=data["id"],
+    @classmethod
+    def instantiate_from_dict(cls, data:dict) -> Self:
+        return cls(
+            id=data["id"],
             name=data["name"],
-            email=data["email"]
+            email=data["email"],
+            creation_date=data.get("creation_date"),
+            last_update=data.get("last_update"),
         )
+    
     def __str__(self):
         return f"{self.name} ({self.id})"
