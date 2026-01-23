@@ -22,26 +22,19 @@ def app():
     st.divider()
 
     st.subheader("Nutzer Übersicht")
-
     users = user_service.get_all_users()
-
     table_data = {
     "Name": [],
     "Email": [],
     "User-ID": [],
     }
-
     if not users:
         st.info("Noch keine Nutzer vorhanden.")
-
     else:
-
         for n in users:
-
             table_data["Name"].append(n.name)
             table_data["Email"].append(n.email)
             table_data["User-ID"].append(n.id)
-
     st.table(table_data, border="horizontal")
 
     st.divider()
@@ -50,9 +43,9 @@ def app():
     if users: 
         user_map = {f"{d.name} ({d.id})":d for d in users}
         selected_key = st.selectbox("Nutzer auswäheln", list (user_map.keys()))
-        selected_device = user_map[selected_key]
+        selected_user = user_map[selected_key]
         if st.button("Nutzer löschen"):
-            result = user_service.delete_user(selected_device.id)
+            result = user_service.delete_user(selected_user.id)
             if not result.get("success"):
                 st.error(result.get("error", "Löschen nicht möglich"))
             else:

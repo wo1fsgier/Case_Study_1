@@ -1,19 +1,30 @@
 import uuid
-from tinydb import Query
 from Models.Devices import Device
-from database import Singleton
 from .user_service import User_Verwaltung
+from .reservation_service import Reservation
+from datetime import date
 
 
 class Device_Verwaltung:
 
     def __init__(self):
         self.user_service = User_Verwaltung()
+        self.reservation_service = Reservation()
 
-    def create_device(self, name, responsible_user_email):
+    def create_device(self, name, responsible_user_email, service_cost, service_intervall):
 
         if not name.strip():
             return {"success": False, "error": "Name darf nicht leer sein"}
+        
+        try:
+            service_cost = float(service_cost)
+        except (TypeError, ValueError):
+            return {"success": False, "error": "Servicekosten müssen eine Zahl sein"}
+
+        try:
+            service_intervall = int(service_intervall)
+        except (TypeError, ValueError):
+            return {"success": False, "error": "Serviceintervall muss eine ganze Zahl sein"}
 
         if not responsible_user_email.strip():
             return {"success": False, "error": "Email darf nicht leer sein"}
@@ -29,7 +40,10 @@ class Device_Verwaltung:
         device = Device(
             id=str(uuid.uuid4()),
             name=name,
-            responsible_user_id=user.id
+            responsible_user_id=user.id,
+            service_intervall=service_intervall,
+            service_cost=service_cost,
+            last_update=date.today(),
         )
         device.store_data()
         return {"success": True}
@@ -82,6 +96,5 @@ class Device_Verwaltung:
         return Device.find_by_attribute("responsible_user_id", user_id) is not None
 
     
-    def change_status(self, device_id, status):
-        # Das brauchen wir erst bei Reservierungen
-        pass
+    def get_status(self, device) -> str:
+        return "busy" if self.reservation_service.is_reserved_now(device.id) else "free"

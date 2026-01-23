@@ -6,9 +6,8 @@ from typing import Self
 class Serializable(ABC):
     db_connector =  None
 
-    def __init__(self, id, creation_date: datetime = None, last_update: datetime = None) -> None:
+    def __init__(self, id, last_update: datetime = None) -> None:
         self.id = id
-        self.creation_date = creation_date if creation_date else datetime.now()
         self.last_update = last_update if last_update else datetime.now()
 
     @classmethod

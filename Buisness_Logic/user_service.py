@@ -1,8 +1,6 @@
 from Models.User import User
 from Models.Devices import Device
 import uuid
-from database import Singleton
-
 
 class User_Verwaltung:
     def __init__(self):
@@ -44,11 +42,9 @@ class User_Verwaltung:
             return{"success": False, "error": "Nutzer haftet für einen Drucker"}
         user.delete()
         return{"success":True}
-       
 
     def edit_user(self, user_id: str, data: dict):
         user = User.find_by_attribute("id", user_id)
-        updates = {}
         # keine leeren Felder, sonst crasht tinydb:
         if "name" in data:
             name = data["name"].strip()

@@ -1,36 +1,31 @@
 import streamlit as st
 from Buisness_Logic.device_service import Device_Verwaltung
 
-## Gerät erstellen funktioniert für die Datenbank bereits. Alles weitere also Anzeige etc. muss noch implementiert werden
-
 def app():
 
     device_service = Device_Verwaltung()
 
     st.write("# Gerätemanagement")
-
-    st.write("")
     st.write("## Neues Gerät hinzufügen")
 
     with st.form("create_device_form"):
         name  = st.text_input("Gerätname")
         nutzeremail = st.text_input("Nutzer-Emailadresse")
-
+        service_cost = st.number_input("Servicekosten")
+        service_intervall = st.number_input("Serviceintervall in Tage")
         submitted = st.form_submit_button("Gerät erstellen")
 
     if submitted:
-        result = device_service.create_device(name, nutzeremail)
+        result = device_service.create_device(name, nutzeremail, service_cost, service_intervall)
         if not result["success"]:
             st.error(result["error"])
         else:
-            st.success("User wurde erstellt!")
+            st.success("Drucker wurde erstellt!")
 
     st.divider()
 
     st.subheader("Geräte Übersicht")
-
     devices = device_service.get_all_devices()
-
     table_data = {
         "Name": [],
         "User_Email": [],
@@ -40,17 +35,16 @@ def app():
 
     if not devices:
         st.info("Noch keine Geräte vorhanden.")
-
     else:
-
         for n in devices:
             email = device_service.get_user_email_for_device(n)
+            status = device_service.get_status(n)
 
             table_data["Name"].append(n.name)
             table_data["User_Email"].append(email)
-            table_data["Status"].append(n.status)
-            table_data["Last_Update"].append(n.last_update.strftime("%d.%m.%Y %H:%M"))
-
+            
+            table_data["Status"].append(status)
+            table_data["Last_Update"].append(n.last_update.strftime("%d.%m.%Y"))
     st.table(table_data, border="horizontal")
 
     st.divider()

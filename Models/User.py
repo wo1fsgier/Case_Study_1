@@ -4,9 +4,9 @@ from database import Singleton
 
 class User(Serializable):
     db_connector = Singleton().get_table("users")
-    def __init__(self, id, email:str, name:str, creation_date=None, last_update = None):
+    def __init__(self, id, email:str, name:str, last_update = None):
         
-        super().__init__(id, creation_date, last_update)
+        super().__init__(id, last_update)
         self.name = name
         self.email = email
         
@@ -16,7 +16,6 @@ class User(Serializable):
             id=data["id"],
             name=data["name"],
             email=data["email"],
-            creation_date=data.get("creation_date"),
             last_update=data.get("last_update"),
         )
     

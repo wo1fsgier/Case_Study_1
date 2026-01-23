@@ -39,3 +39,11 @@ Am 29.12.2025 gab es eine große Erweiterung zum Dashboard. Im folgendem finden 
 ### Nutzerverwaltung
 
 ![alt text](ImagesNew/Nutzer.png)
+
+### Reservierungen
+
+![alt text](<ImagesNew/Reservierungen.png>)
+
+### Wartung
+
+![alt text](<ImagesNew/Wartung.png>)
