@@ -42,15 +42,21 @@ class maintenance:
 
 
     def get_costs_per_quarter(self) -> dict:
+        overview = self.get_maintenance_overview()
         costs = {}
 
-        for w in Wartung.find_all():
-            sd = getattr(w, "service_date", None)
+        for r in overview:
+            next_m = r.get("next_maintenance")
+            if not next_m:
+                continue
 
-            q = (sd.month - 1) // 3 + 1
-            quarter = f"Q{q} {sd.year}"
+            if hasattr(next_m, "date"):
+                next_m = next_m.date()
 
-            cost = float(getattr(w, "costs", 0.0) or 0.0)
+            q = (next_m.month - 1) // 3 + 1
+            quarter = f"Q{q} {next_m.year}"
+
+            cost = float(r.get("service_cost", 0.0) or 0.0)
             costs[quarter] = costs.get(quarter, 0.0) + cost
 
         return costs

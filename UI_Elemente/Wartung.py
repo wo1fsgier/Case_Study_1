@@ -45,7 +45,8 @@ def app():
     st.table(table_data)
 
     st.subheader("Wartungskosten pro Quartal")
-    costs= maintenance_service.get_costs_per_quarter()
+    costs = maintenance_service.get_costs_per_quarter()
+
 
     if not costs:
         st.info("Keine Wartungskosten vorhanden.")
